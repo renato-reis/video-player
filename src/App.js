@@ -48,6 +48,12 @@ const App = () => {
     playerDataObject[name].src(urls[key]);
   };
 
+  const onSyncClick = (event) => {
+    if (playerDataObject['mediatailor'] && playerDataObject['channelassembly']) {
+      playerDataObject['mediatailor'].currentTime(playerDataObject['channelassembly'].currentTime());
+    }
+  };
+
   return (
     <div className="video-player-container">
       <div className="left-video-player">
@@ -67,7 +73,14 @@ const App = () => {
             playerRef={handlePlayerRefUpdate}
           ></Player>
           <div className="controls">
-            <div class="ui fluid icon input">
+          <div class="ui fluid icon input">
+              <button
+                class="ui button"
+                onClick={onSyncClick}
+              >
+                Sync
+              </button>
+
               <button
                 name="channelassembly"
                 class="ui button"
