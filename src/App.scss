@@ -1,0 +1,26 @@
+.video-player-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 40px 60px;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+
+  .input {
+    width: 90%;
+    margin-right: 10px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+
+    .button {
+      margin-left: 5px;
+    }
+  }
+}
