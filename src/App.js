@@ -3,7 +3,10 @@ import React, { useState } from "react";
 import { Player } from "./components/Player/Player";
 
 const App = () => {
-  const [playerDataObject, setPlayerDataObject] = useState();
+  const [playerDataObject, setPlayerDataObject] = useState({
+    mediatailor: {},
+    channelassembly: {},
+  });
 
   const [urls, setUrls] = useState({
     mediatailor: "",
@@ -16,21 +19,21 @@ const App = () => {
   });
 
   const handleStartClick = (event) => {
-    console.log(event);
+    const { value, name } = event.target;
     if (playerDataObject) {
-      playerDataObject.play();
+      playerDataObject[name].play();
     }
   };
 
   const handleStopClick = (event) => {
+    const { value, name } = event.target;
     if (playerDataObject) {
-      playerDataObject.pause();
+      playerDataObject[name].pause();
     }
   };
 
   const handlePlayerRefUpdate = (playerRef) => {
-    console.log("playerRef", playerRef);
-    setPlayerDataObject(playerRef);
+    setPlayerDataObject({ ...playerDataObject, [playerRef.id_]: playerRef });
   };
 
   const onInputChange = (event) => {
@@ -40,16 +43,11 @@ const App = () => {
 
   const onButtonClick = (event) => {
     const { value, name } = event.target;
-    console.log(event, name);
+    let key = name + 'Url';
 
-    playerDataObject.src(urls.mediatailor);
-
-    // playerDataObject.src(response.urls.mediatailor);
-
-    // setPlaybackUrls({ ...playbackurls, [name]: urls.mediatailor });
+    playerDataObject[name].src(urls[key]);
   };
 
-  console.log("playerDataObject", playerDataObject);
   return (
     <div className="video-player-container">
       <div className="left-video-player">
@@ -71,7 +69,7 @@ const App = () => {
           <div className="controls">
             <div class="ui fluid icon input">
               <button
-                name="mediatailor"
+                name="channelassembly"
                 class="ui button"
                 onClick={onButtonClick}
               >
@@ -80,16 +78,16 @@ const App = () => {
 
               <input
                 onChange={onInputChange}
-                name="mediatailor-url"
+                name="channelassemblyUrl"
                 type="text"
                 placeholder="Channel Assembly playback url..."
               />
             </div>
             <div className="buttons">
-              <button class="ui button" onClick={handleStopClick}>
+              <button class="ui button" name="channelassembly" onClick={handleStopClick}>
                 Stop
               </button>
-              <button class="ui button" onClick={handleStartClick}>
+              <button class="ui button" name="channelassembly" onClick={handleStartClick}>
                 Play
               </button>
             </div>
@@ -115,21 +113,26 @@ const App = () => {
           ></Player>
 
           <div className="controls">
-            <button class="ui button">Load</button>
+            <button 
+              name="mediatailor"
+              class="ui button"
+              onClick={onButtonClick}
+              >Load
+            </button>
 
             <div class="ui fluid icon input">
               <input
                 onChange={onInputChange}
-                name="ca-url"
+                name="mediatailorUrl"
                 type="text"
                 placeholder="MediaTailor playback url..."
               />
             </div>
             <div className="buttons">
-              <button class="ui button" onClick={handleStopClick}>
+              <button class="ui button" name="mediatailor" onClick={handleStopClick}>
                 Stop
               </button>
-              <button class="ui button" onClick={handleStartClick}>
+              <button class="ui button" name="mediatailor" onClick={handleStartClick}>
                 Play
               </button>
             </div>
