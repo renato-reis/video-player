@@ -52,7 +52,28 @@ const App = () => {
     if (playerDataObject['mediatailor'] && playerDataObject['channelassembly']) {
       playerDataObject['mediatailor'].currentTime(playerDataObject['channelassembly'].currentTime());
     }
+    sync();
+    playerDataObject['channelassembly'].on("play", function() {
+      playerDataObject['mediatailor'].play();
+      playerDataObject['mediatailor'].currentTime(playerDataObject['channelassembly'].currentTime());
+    });
+    playerDataObject['channelassembly'].on("pause", function() {
+      playerDataObject['mediatailor'].pause();
+      playerDataObject['mediatailor'].currentTime(playerDataObject['channelassembly'].currentTime());
+    });
+    playerDataObject['channelassembly'].on("seeked", function() {
+      playerDataObject['mediatailor'].currentTime(playerDataObject['channelassembly'].currentTime());
+    });
   };
+
+function sync() {
+  if (playerDataObject['mediatailor'] && playerDataObject['channelassembly']) {
+    playerDataObject['channelassembly'].on("timeupdate", function() {
+      playerDataObject['mediatailor'].currentTime(playerDataObject['channelassembly'].currentTime());
+    });
+  }
+  requestAnimationFrame(sync);
+}
 
   return (
     <div className="video-player-container">
